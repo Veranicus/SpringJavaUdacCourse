@@ -2,6 +2,7 @@ package com.udacity.jwnd.c1.review.controller;
 
 import com.udacity.jwnd.c1.review.service.MessageListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +23,21 @@ public class ChatController {
 
     @GetMapping
     public String handleChatGetMessage(@ModelAttribute("chatForm") ChatForm chatForm, Model model) {
-        model.addAttribute("chatMessages", messageListService.getChatMessages());
+        model.addAttribute("chatMessages", messageListService.getMessages());
         return "chat";
     }
 
     @PostMapping
-    public String handleChatPostMessage(@ModelAttribute("chatForm") ChatForm chatForm, Model model) {
+    public String handleChatPostMessage(Authentication authentication, @ModelAttribute("chatForm") ChatForm chatForm, Model model) {
+        chatForm.setUsername(authentication.getName());
         messageListService.addChatMessage(chatForm);
         chatForm.setMessageText("");
-        model.addAttribute("chatMessages", messageListService.getChatMessages());
+        model.addAttribute("chatMessages", messageListService.getMessages());
         return "chat";
+    }
+
+    @ModelAttribute("allMessageTypes")
+    public String[] allMessageTypes() {
+        return new String[]{"say", "shout", "whisper"};
     }
 }

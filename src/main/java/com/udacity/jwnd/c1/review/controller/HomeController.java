@@ -1,5 +1,6 @@
 package com.udacity.jwnd.c1.review.controller;
 
+import com.udacity.jwnd.c1.review.model.MessageForm;
 import com.udacity.jwnd.c1.review.service.MessageListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class HomeController {
 
     @PostMapping("/home")
     public String addMessage(@ModelAttribute("newMessage") MessageForm newMessage, Model model) {
-        messageListService.addMessage(newMessage.getText());
+        messageListService.addMessage(new ChatMessages(newMessage.getText(), "null"));
         model.addAttribute("greetings", messageListService.getMessages());
         newMessage.setText("");
         return "home";

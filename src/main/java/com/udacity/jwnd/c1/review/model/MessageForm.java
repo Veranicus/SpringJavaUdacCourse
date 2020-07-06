@@ -1,4 +1,4 @@
-package com.udacity.jwnd.c1.review.controller;
+package com.udacity.jwnd.c1.review.model;
 
 public class MessageForm {
     private String text;
