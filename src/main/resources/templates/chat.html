@@ -24,7 +24,7 @@
     <input type="submit">
 </form>
 <div th:each="chatMessage : ${chatMessages}">
-    <span th:text="${chatMessage.username}">Username</span>: <span
+    <span th:text="${chatMessage.username} ">Username</span>: <span
         th:text="${chatMessage.messageText}">Hello, world!</span>
 </div>
 </body>
